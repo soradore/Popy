@@ -8,7 +8,7 @@ class Session:
         self.serverport = serverport
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #Popy⇔サーバー(PMMP、BDS等)をつなぐソケット
         self.server.bind((hostip, random.randint(49152, 65535)))
-        self.server.setblocking(False)
+        self.server.setblocking(True)
         pass
 
     def send(self, bytes):
@@ -16,9 +16,11 @@ class Session:
         pass
 
     def receive(self):
-        bytes, address = self.server.recvfrom(65535)
-        print(bytes)
-        if bytes != 0:
-            if address[0] == self.serverip and address[1] == self.serverport:
-                return bytes
-        return False
+        #サーバ側に返答処理を書いてなかったので適当
+        #bytes, address = self.server.recvfrom(65535)
+        #print(bytes)
+        #if bytes != 0:
+        #    if address[0] == self.serverip and address[1] == self.serverport:
+        #        return bytes
+        #return False
+        return ("HUEE").encode()

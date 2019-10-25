@@ -3,18 +3,19 @@ import Session
 
 class SocketHandler:
 
-    def __init__(self):
-        import Popy
+    def __init__(self, popyport, serverip, serverport):
+        #import Popy
 
-        self.popyip = socket.gethostname()
-        self.popyport = Popy.C_PORT
+        self.popyip = '0.0.0.0'
+        self.popyport = popyport 
 
-        self.serverip = Popy.S_ADDRESS
-        self.serverport = Popy.S_PORT
+        self.serverip = serverip
+        self.serverport = serverport
 
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)#クライアント(MCBE)⇔Popy間をつなぐソケット
         self.client.bind((self.popyip, self.popyport))
-        self.client.setblocking(False)
+        #self.client.setblocking(False)
+        self.client.setblocking(True);
 
         self.sessions = {}
 
@@ -41,5 +42,5 @@ class SocketHandler:
             bytes = self.sessions[key].receive()
             if bytes != 0:
                 address = key.split(":")
-                self.client.sendto(bytes, (address[0], address[1]))
+                self.client.sendto(bytes, (address[0], int(address[1])))
             pass
